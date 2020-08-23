@@ -1,3 +1,4 @@
+import FirebaseClient
 import BinanceClient
 import threading
 import numpy as np
@@ -13,8 +14,13 @@ def run(strategy):
 # Data Structures
 
 class Strategy:
+    """
+    Base Strategy Class; Extend this class when building strategies
+    """
 
     def __init__(self, balance, symbol, horizon):
+        self.name = str(self.__class__.__name__) + ":" + str(symbol)
+        print(self.name)
         self.balance = balance
         self.holdings = 0
         self.symbol = symbol
@@ -62,10 +68,9 @@ class Strategy:
             self.actions.append(Action("BUY", amount))
 
     def log(self):
-        # TODO: Push logs then set to none
-        log = Log(self.balance, self.holdings, self.price, self.actions)
+        # TODO: Push logs then set actions to none
+        log = Log(self.name, self.balance, self.holdings, self.price, self.actions)
         self.actions = [] 
-        log.print();
 
     def tick(self):
         self.getData()
@@ -82,12 +87,17 @@ class Action:
         self.amount = amount 
 
 class Log:
-    def __init__(self, balance, holdings, price, actions):
+    def __init__(self, name, balance, holdings, price, actions):
+        self.name = name
         self.value = balance + holdings * price
         self.balance = balance
         self.holdings = holdings
         self.price = price
         self.actions = actions
+        self.log()
+    
+    def log(self):
+        FirebaseClient.update(self.name, self.value, self.balance, self.holdings, self.price, self.actions)
 
     def print(self):
         print("Value: " + str(self.value) + "\n")

@@ -1260,6 +1260,7 @@ static const char __pyx_k_main[] = "__main__";
 static const char __pyx_k_name[] = "__name__";
 static const char __pyx_k_prev[] = "prev";
 static const char __pyx_k_self[] = "self";
+static const char __pyx_k_sell[] = "sell";
 static const char __pyx_k_slow[] = "slow";
 static const char __pyx_k_test[] = "__test__";
 static const char __pyx_k_begin[] = "begin";
@@ -1279,7 +1280,6 @@ static const char __pyx_k_Strategy[] = "Strategy";
 static const char __pyx_k_holdings[] = "holdings";
 static const char __pyx_k_qualname[] = "__qualname__";
 static const char __pyx_k_strategy[] = "strategy";
-static const char __pyx_k_Liquidate[] = "Liquidate";
 static const char __pyx_k_metaclass[] = "__metaclass__";
 static const char __pyx_k_getCandles[] = "getCandles";
 static const char __pyx_k_indicators[] = "indicators";
@@ -1296,7 +1296,6 @@ static PyObject *__pyx_kp_s_1m;
 static PyObject *__pyx_kp_s_BTC_USD;
 static PyObject *__pyx_n_s_EMA;
 static PyObject *__pyx_n_s_Library;
-static PyObject *__pyx_n_s_Liquidate;
 static PyObject *__pyx_n_s_MACrossoverStrategy;
 static PyObject *__pyx_n_s_MACrossoverStrategy___init;
 static PyObject *__pyx_n_s_MACrossoverStrategy_checkActions;
@@ -1329,6 +1328,7 @@ static PyObject *__pyx_n_s_prepare;
 static PyObject *__pyx_n_s_prev;
 static PyObject *__pyx_n_s_qualname;
 static PyObject *__pyx_n_s_self;
+static PyObject *__pyx_n_s_sell;
 static PyObject *__pyx_n_s_slow;
 static PyObject *__pyx_n_s_strategy;
 static PyObject *__pyx_n_s_symbol;
@@ -1832,7 +1832,7 @@ static PyObject *__pyx_pf_12ma_crossover_19MACrossoverStrategy_2checkActions(CYT
  *         if self.indicators['fast'] > self.indicators['slow'] and self.holdings <= 0:
  *             self.buy(0.5)             # <<<<<<<<<<<<<<
  *         elif self.indicators['fast'] < self.indicators['slow'] and self.holdings >=0:
- *             self.Liquidate()
+ *             self.sell(0.5)
  */
     __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_buy); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 18, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
@@ -1867,7 +1867,7 @@ static PyObject *__pyx_pf_12ma_crossover_19MACrossoverStrategy_2checkActions(CYT
  *         if self.indicators['fast'] > self.indicators['slow'] and self.holdings <= 0:
  *             self.buy(0.5)
  *         elif self.indicators['fast'] < self.indicators['slow'] and self.holdings >=0:             # <<<<<<<<<<<<<<
- *             self.Liquidate()
+ *             self.sell(0.5)
  * 
  */
   __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_indicators); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 19, __pyx_L1_error)
@@ -1903,11 +1903,11 @@ static PyObject *__pyx_pf_12ma_crossover_19MACrossoverStrategy_2checkActions(CYT
     /* "ma_crossover.pyx":20
  *             self.buy(0.5)
  *         elif self.indicators['fast'] < self.indicators['slow'] and self.holdings >=0:
- *             self.Liquidate()             # <<<<<<<<<<<<<<
+ *             self.sell(0.5)             # <<<<<<<<<<<<<<
  * 
  *     def update(self):
  */
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_Liquidate); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 20, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_sell); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 20, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __pyx_t_2 = NULL;
     if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_4))) {
@@ -1919,7 +1919,7 @@ static PyObject *__pyx_pf_12ma_crossover_19MACrossoverStrategy_2checkActions(CYT
         __Pyx_DECREF_SET(__pyx_t_4, function);
       }
     }
-    __pyx_t_3 = (__pyx_t_2) ? __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_2) : __Pyx_PyObject_CallNoArg(__pyx_t_4);
+    __pyx_t_3 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_4, __pyx_t_2, __pyx_float_0_5) : __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_float_0_5);
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
     if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 20, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
@@ -1930,7 +1930,7 @@ static PyObject *__pyx_pf_12ma_crossover_19MACrossoverStrategy_2checkActions(CYT
  *         if self.indicators['fast'] > self.indicators['slow'] and self.holdings <= 0:
  *             self.buy(0.5)
  *         elif self.indicators['fast'] < self.indicators['slow'] and self.holdings >=0:             # <<<<<<<<<<<<<<
- *             self.Liquidate()
+ *             self.sell(0.5)
  * 
  */
   }
@@ -1960,7 +1960,7 @@ static PyObject *__pyx_pf_12ma_crossover_19MACrossoverStrategy_2checkActions(CYT
 }
 
 /* "ma_crossover.pyx":22
- *             self.Liquidate()
+ *             self.sell(0.5)
  * 
  *     def update(self):             # <<<<<<<<<<<<<<
  *         self.candles = self.getCandles()
@@ -2175,7 +2175,7 @@ static PyObject *__pyx_pf_12ma_crossover_19MACrossoverStrategy_4update(CYTHON_UN
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
   /* "ma_crossover.pyx":22
- *             self.Liquidate()
+ *             self.sell(0.5)
  * 
  *     def update(self):             # <<<<<<<<<<<<<<
  *         self.candles = self.getCandles()
@@ -2249,7 +2249,6 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_kp_s_BTC_USD, __pyx_k_BTC_USD, sizeof(__pyx_k_BTC_USD), 0, 0, 1, 0},
   {&__pyx_n_s_EMA, __pyx_k_EMA, sizeof(__pyx_k_EMA), 0, 0, 1, 1},
   {&__pyx_n_s_Library, __pyx_k_Library, sizeof(__pyx_k_Library), 0, 0, 1, 1},
-  {&__pyx_n_s_Liquidate, __pyx_k_Liquidate, sizeof(__pyx_k_Liquidate), 0, 0, 1, 1},
   {&__pyx_n_s_MACrossoverStrategy, __pyx_k_MACrossoverStrategy, sizeof(__pyx_k_MACrossoverStrategy), 0, 0, 1, 1},
   {&__pyx_n_s_MACrossoverStrategy___init, __pyx_k_MACrossoverStrategy___init, sizeof(__pyx_k_MACrossoverStrategy___init), 0, 0, 1, 1},
   {&__pyx_n_s_MACrossoverStrategy_checkActions, __pyx_k_MACrossoverStrategy_checkActions, sizeof(__pyx_k_MACrossoverStrategy_checkActions), 0, 0, 1, 1},
@@ -2282,6 +2281,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_prev, __pyx_k_prev, sizeof(__pyx_k_prev), 0, 0, 1, 1},
   {&__pyx_n_s_qualname, __pyx_k_qualname, sizeof(__pyx_k_qualname), 0, 0, 1, 1},
   {&__pyx_n_s_self, __pyx_k_self, sizeof(__pyx_k_self), 0, 0, 1, 1},
+  {&__pyx_n_s_sell, __pyx_k_sell, sizeof(__pyx_k_sell), 0, 0, 1, 1},
   {&__pyx_n_s_slow, __pyx_k_slow, sizeof(__pyx_k_slow), 0, 0, 1, 1},
   {&__pyx_n_s_strategy, __pyx_k_strategy, sizeof(__pyx_k_strategy), 0, 0, 1, 1},
   {&__pyx_n_s_symbol, __pyx_k_symbol, sizeof(__pyx_k_symbol), 0, 0, 1, 1},
@@ -2334,7 +2334,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __pyx_codeobj__5 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__4, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_ma_crossover_pyx, __pyx_n_s_checkActions, 16, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__5)) __PYX_ERR(0, 16, __pyx_L1_error)
 
   /* "ma_crossover.pyx":22
- *             self.Liquidate()
+ *             self.sell(0.5)
  * 
  *     def update(self):             # <<<<<<<<<<<<<<
  *         self.candles = self.getCandles()
@@ -2711,7 +2711,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
   /* "ma_crossover.pyx":22
- *             self.Liquidate()
+ *             self.sell(0.5)
  * 
  *     def update(self):             # <<<<<<<<<<<<<<
  *         self.candles = self.getCandles()
