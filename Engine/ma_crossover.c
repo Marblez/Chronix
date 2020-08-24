@@ -1250,7 +1250,6 @@ int __pyx_module_is_main_ma_crossover = 0;
 
 /* Implementation of 'ma_crossover' */
 static const char __pyx_k_1m[] = "1m";
-static const char __pyx_k_EMA[] = "EMA";
 static const char __pyx_k_SMA[] = "SMA";
 static const char __pyx_k_buy[] = "buy";
 static const char __pyx_k_doc[] = "__doc__";
@@ -1294,7 +1293,6 @@ static const char __pyx_k_Simple_moving_average_crossover[] = "\n    Simple movi
 static const char __pyx_k_MACrossoverStrategy_checkActions[] = "MACrossoverStrategy.checkActions";
 static PyObject *__pyx_kp_s_1m;
 static PyObject *__pyx_kp_s_BTC_USD;
-static PyObject *__pyx_n_s_EMA;
 static PyObject *__pyx_n_s_Library;
 static PyObject *__pyx_n_s_MACrossoverStrategy;
 static PyObject *__pyx_n_s_MACrossoverStrategy___init;
@@ -1341,16 +1339,19 @@ static PyObject *__pyx_pf_12ma_crossover_19MACrossoverStrategy_4update(CYTHON_UN
 static PyObject *__pyx_float_0_5;
 static PyObject *__pyx_int_0;
 static PyObject *__pyx_int_10;
+static PyObject *__pyx_int_25;
 static PyObject *__pyx_int_10000;
 static PyObject *__pyx_int_neg_10;
+static PyObject *__pyx_int_neg_25;
 static PyObject *__pyx_slice_;
-static PyObject *__pyx_tuple__2;
-static PyObject *__pyx_tuple__4;
-static PyObject *__pyx_tuple__6;
-static PyObject *__pyx_tuple__8;
-static PyObject *__pyx_codeobj__3;
-static PyObject *__pyx_codeobj__5;
-static PyObject *__pyx_codeobj__7;
+static PyObject *__pyx_slice__2;
+static PyObject *__pyx_tuple__3;
+static PyObject *__pyx_tuple__5;
+static PyObject *__pyx_tuple__7;
+static PyObject *__pyx_tuple__9;
+static PyObject *__pyx_codeobj__4;
+static PyObject *__pyx_codeobj__6;
+static PyObject *__pyx_codeobj__8;
 /* Late includes */
 
 /* "ma_crossover.pyx":8
@@ -1544,7 +1545,7 @@ static PyObject *__pyx_pf_12ma_crossover_19MACrossoverStrategy___init__(CYTHON_U
  *         self.prev = 0
  *         self.indicators = {}             # <<<<<<<<<<<<<<
  *         self.candles = self.getCandles()
- *         self.indicators['fast'] = talib.EMA(self.candles.close[-10:], 10)[-1]
+ *         self.indicators['fast'] = talib.SMA(self.candles.close[-10:], 10)[-1]
  */
   __pyx_t_1 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 11, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
@@ -1555,8 +1556,8 @@ static PyObject *__pyx_pf_12ma_crossover_19MACrossoverStrategy___init__(CYTHON_U
  *         self.prev = 0
  *         self.indicators = {}
  *         self.candles = self.getCandles()             # <<<<<<<<<<<<<<
- *         self.indicators['fast'] = talib.EMA(self.candles.close[-10:], 10)[-1]
- *         self.indicators['slow'] = talib.SMA(self.candles.close[-10:], 10)[-1]
+ *         self.indicators['fast'] = talib.SMA(self.candles.close[-10:], 10)[-1]
+ *         self.indicators['slow'] = talib.SMA(self.candles.close[-25:], 25)[-1]
  */
   __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_getCandles); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 12, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
@@ -1581,13 +1582,13 @@ static PyObject *__pyx_pf_12ma_crossover_19MACrossoverStrategy___init__(CYTHON_U
   /* "ma_crossover.pyx":13
  *         self.indicators = {}
  *         self.candles = self.getCandles()
- *         self.indicators['fast'] = talib.EMA(self.candles.close[-10:], 10)[-1]             # <<<<<<<<<<<<<<
- *         self.indicators['slow'] = talib.SMA(self.candles.close[-10:], 10)[-1]
+ *         self.indicators['fast'] = talib.SMA(self.candles.close[-10:], 10)[-1]             # <<<<<<<<<<<<<<
+ *         self.indicators['slow'] = talib.SMA(self.candles.close[-25:], 25)[-1]
  * 
  */
   __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_talib); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 13, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_EMA); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 13, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_SMA); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 13, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_candles); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 13, __pyx_L1_error)
@@ -1656,8 +1657,8 @@ static PyObject *__pyx_pf_12ma_crossover_19MACrossoverStrategy___init__(CYTHON_U
 
   /* "ma_crossover.pyx":14
  *         self.candles = self.getCandles()
- *         self.indicators['fast'] = talib.EMA(self.candles.close[-10:], 10)[-1]
- *         self.indicators['slow'] = talib.SMA(self.candles.close[-10:], 10)[-1]             # <<<<<<<<<<<<<<
+ *         self.indicators['fast'] = talib.SMA(self.candles.close[-10:], 10)[-1]
+ *         self.indicators['slow'] = talib.SMA(self.candles.close[-25:], 25)[-1]             # <<<<<<<<<<<<<<
  * 
  *     def checkActions(self):
  */
@@ -1671,7 +1672,7 @@ static PyObject *__pyx_pf_12ma_crossover_19MACrossoverStrategy___init__(CYTHON_U
   __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_close); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 14, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_GetSlice(__pyx_t_2, -10L, 0, NULL, NULL, &__pyx_slice_, 1, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 14, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetSlice(__pyx_t_2, -25L, 0, NULL, NULL, &__pyx_slice__2, 1, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 14, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_2 = NULL;
@@ -1688,7 +1689,7 @@ static PyObject *__pyx_pf_12ma_crossover_19MACrossoverStrategy___init__(CYTHON_U
   }
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_6)) {
-    PyObject *__pyx_temp[3] = {__pyx_t_2, __pyx_t_1, __pyx_int_10};
+    PyObject *__pyx_temp[3] = {__pyx_t_2, __pyx_t_1, __pyx_int_25};
     __pyx_t_5 = __Pyx_PyFunction_FastCall(__pyx_t_6, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 14, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_GOTREF(__pyx_t_5);
@@ -1697,7 +1698,7 @@ static PyObject *__pyx_pf_12ma_crossover_19MACrossoverStrategy___init__(CYTHON_U
   #endif
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_6)) {
-    PyObject *__pyx_temp[3] = {__pyx_t_2, __pyx_t_1, __pyx_int_10};
+    PyObject *__pyx_temp[3] = {__pyx_t_2, __pyx_t_1, __pyx_int_25};
     __pyx_t_5 = __Pyx_PyCFunction_FastCall(__pyx_t_6, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 14, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_GOTREF(__pyx_t_5);
@@ -1712,9 +1713,9 @@ static PyObject *__pyx_pf_12ma_crossover_19MACrossoverStrategy___init__(CYTHON_U
     }
     __Pyx_GIVEREF(__pyx_t_1);
     PyTuple_SET_ITEM(__pyx_t_3, 0+__pyx_t_4, __pyx_t_1);
-    __Pyx_INCREF(__pyx_int_10);
-    __Pyx_GIVEREF(__pyx_int_10);
-    PyTuple_SET_ITEM(__pyx_t_3, 1+__pyx_t_4, __pyx_int_10);
+    __Pyx_INCREF(__pyx_int_25);
+    __Pyx_GIVEREF(__pyx_int_25);
+    PyTuple_SET_ITEM(__pyx_t_3, 1+__pyx_t_4, __pyx_int_25);
     __pyx_t_1 = 0;
     __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_3, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 14, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
@@ -1756,7 +1757,7 @@ static PyObject *__pyx_pf_12ma_crossover_19MACrossoverStrategy___init__(CYTHON_U
 }
 
 /* "ma_crossover.pyx":16
- *         self.indicators['slow'] = talib.SMA(self.candles.close[-10:], 10)[-1]
+ *         self.indicators['slow'] = talib.SMA(self.candles.close[-25:], 25)[-1]
  * 
  *     def checkActions(self):             # <<<<<<<<<<<<<<
  *         if self.indicators['fast'] > self.indicators['slow'] and self.holdings <= 0:
@@ -1937,7 +1938,7 @@ static PyObject *__pyx_pf_12ma_crossover_19MACrossoverStrategy_2checkActions(CYT
   __pyx_L3:;
 
   /* "ma_crossover.pyx":16
- *         self.indicators['slow'] = talib.SMA(self.candles.close[-10:], 10)[-1]
+ *         self.indicators['slow'] = talib.SMA(self.candles.close[-25:], 25)[-1]
  * 
  *     def checkActions(self):             # <<<<<<<<<<<<<<
  *         if self.indicators['fast'] > self.indicators['slow'] and self.holdings <= 0:
@@ -1964,7 +1965,7 @@ static PyObject *__pyx_pf_12ma_crossover_19MACrossoverStrategy_2checkActions(CYT
  * 
  *     def update(self):             # <<<<<<<<<<<<<<
  *         self.candles = self.getCandles()
- *         self.indicators['fast'] = talib.EMA(self.candles.close[-10:], 10)[-1]
+ *         self.indicators['fast'] = talib.SMA(self.candles.close[-10:], 10)[-1]
  */
 
 /* Python wrapper */
@@ -1999,8 +2000,8 @@ static PyObject *__pyx_pf_12ma_crossover_19MACrossoverStrategy_4update(CYTHON_UN
  * 
  *     def update(self):
  *         self.candles = self.getCandles()             # <<<<<<<<<<<<<<
- *         self.indicators['fast'] = talib.EMA(self.candles.close[-10:], 10)[-1]
- *         self.indicators['slow'] = talib.SMA(self.candles.close[-10:], 10)[-1]
+ *         self.indicators['fast'] = talib.SMA(self.candles.close[-10:], 10)[-1]
+ *         self.indicators['slow'] = talib.SMA(self.candles.close[-25:], 25)[-1]
  */
   __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_getCandles); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 23, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
@@ -2025,13 +2026,13 @@ static PyObject *__pyx_pf_12ma_crossover_19MACrossoverStrategy_4update(CYTHON_UN
   /* "ma_crossover.pyx":24
  *     def update(self):
  *         self.candles = self.getCandles()
- *         self.indicators['fast'] = talib.EMA(self.candles.close[-10:], 10)[-1]             # <<<<<<<<<<<<<<
- *         self.indicators['slow'] = talib.SMA(self.candles.close[-10:], 10)[-1]
+ *         self.indicators['fast'] = talib.SMA(self.candles.close[-10:], 10)[-1]             # <<<<<<<<<<<<<<
+ *         self.indicators['slow'] = talib.SMA(self.candles.close[-25:], 25)[-1]
  * 
  */
   __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_talib); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 24, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_EMA); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 24, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_SMA); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 24, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_candles); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 24, __pyx_L1_error)
@@ -2100,8 +2101,8 @@ static PyObject *__pyx_pf_12ma_crossover_19MACrossoverStrategy_4update(CYTHON_UN
 
   /* "ma_crossover.pyx":25
  *         self.candles = self.getCandles()
- *         self.indicators['fast'] = talib.EMA(self.candles.close[-10:], 10)[-1]
- *         self.indicators['slow'] = talib.SMA(self.candles.close[-10:], 10)[-1]             # <<<<<<<<<<<<<<
+ *         self.indicators['fast'] = talib.SMA(self.candles.close[-10:], 10)[-1]
+ *         self.indicators['slow'] = talib.SMA(self.candles.close[-25:], 25)[-1]             # <<<<<<<<<<<<<<
  * 
  * strategy = MACrossoverStrategy(10000, "BTC/USD", "1m")
  */
@@ -2115,7 +2116,7 @@ static PyObject *__pyx_pf_12ma_crossover_19MACrossoverStrategy_4update(CYTHON_UN
   __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_close); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 25, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_GetSlice(__pyx_t_2, -10L, 0, NULL, NULL, &__pyx_slice_, 1, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 25, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetSlice(__pyx_t_2, -25L, 0, NULL, NULL, &__pyx_slice__2, 1, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 25, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_2 = NULL;
@@ -2132,7 +2133,7 @@ static PyObject *__pyx_pf_12ma_crossover_19MACrossoverStrategy_4update(CYTHON_UN
   }
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_6)) {
-    PyObject *__pyx_temp[3] = {__pyx_t_2, __pyx_t_1, __pyx_int_10};
+    PyObject *__pyx_temp[3] = {__pyx_t_2, __pyx_t_1, __pyx_int_25};
     __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_6, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 25, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_GOTREF(__pyx_t_3);
@@ -2141,7 +2142,7 @@ static PyObject *__pyx_pf_12ma_crossover_19MACrossoverStrategy_4update(CYTHON_UN
   #endif
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_6)) {
-    PyObject *__pyx_temp[3] = {__pyx_t_2, __pyx_t_1, __pyx_int_10};
+    PyObject *__pyx_temp[3] = {__pyx_t_2, __pyx_t_1, __pyx_int_25};
     __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_6, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 25, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_GOTREF(__pyx_t_3);
@@ -2156,9 +2157,9 @@ static PyObject *__pyx_pf_12ma_crossover_19MACrossoverStrategy_4update(CYTHON_UN
     }
     __Pyx_GIVEREF(__pyx_t_1);
     PyTuple_SET_ITEM(__pyx_t_4, 0+__pyx_t_5, __pyx_t_1);
-    __Pyx_INCREF(__pyx_int_10);
-    __Pyx_GIVEREF(__pyx_int_10);
-    PyTuple_SET_ITEM(__pyx_t_4, 1+__pyx_t_5, __pyx_int_10);
+    __Pyx_INCREF(__pyx_int_25);
+    __Pyx_GIVEREF(__pyx_int_25);
+    PyTuple_SET_ITEM(__pyx_t_4, 1+__pyx_t_5, __pyx_int_25);
     __pyx_t_1 = 0;
     __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_4, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 25, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
@@ -2179,7 +2180,7 @@ static PyObject *__pyx_pf_12ma_crossover_19MACrossoverStrategy_4update(CYTHON_UN
  * 
  *     def update(self):             # <<<<<<<<<<<<<<
  *         self.candles = self.getCandles()
- *         self.indicators['fast'] = talib.EMA(self.candles.close[-10:], 10)[-1]
+ *         self.indicators['fast'] = talib.SMA(self.candles.close[-10:], 10)[-1]
  */
 
   /* function exit code */
@@ -2247,7 +2248,6 @@ static struct PyModuleDef __pyx_moduledef = {
 static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_kp_s_1m, __pyx_k_1m, sizeof(__pyx_k_1m), 0, 0, 1, 0},
   {&__pyx_kp_s_BTC_USD, __pyx_k_BTC_USD, sizeof(__pyx_k_BTC_USD), 0, 0, 1, 0},
-  {&__pyx_n_s_EMA, __pyx_k_EMA, sizeof(__pyx_k_EMA), 0, 0, 1, 1},
   {&__pyx_n_s_Library, __pyx_k_Library, sizeof(__pyx_k_Library), 0, 0, 1, 1},
   {&__pyx_n_s_MACrossoverStrategy, __pyx_k_MACrossoverStrategy, sizeof(__pyx_k_MACrossoverStrategy), 0, 0, 1, 1},
   {&__pyx_n_s_MACrossoverStrategy___init, __pyx_k_MACrossoverStrategy___init, sizeof(__pyx_k_MACrossoverStrategy___init), 0, 0, 1, 1},
@@ -2301,13 +2301,24 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   /* "ma_crossover.pyx":13
  *         self.indicators = {}
  *         self.candles = self.getCandles()
- *         self.indicators['fast'] = talib.EMA(self.candles.close[-10:], 10)[-1]             # <<<<<<<<<<<<<<
- *         self.indicators['slow'] = talib.SMA(self.candles.close[-10:], 10)[-1]
+ *         self.indicators['fast'] = talib.SMA(self.candles.close[-10:], 10)[-1]             # <<<<<<<<<<<<<<
+ *         self.indicators['slow'] = talib.SMA(self.candles.close[-25:], 25)[-1]
  * 
  */
   __pyx_slice_ = PySlice_New(__pyx_int_neg_10, Py_None, Py_None); if (unlikely(!__pyx_slice_)) __PYX_ERR(0, 13, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_slice_);
   __Pyx_GIVEREF(__pyx_slice_);
+
+  /* "ma_crossover.pyx":14
+ *         self.candles = self.getCandles()
+ *         self.indicators['fast'] = talib.SMA(self.candles.close[-10:], 10)[-1]
+ *         self.indicators['slow'] = talib.SMA(self.candles.close[-25:], 25)[-1]             # <<<<<<<<<<<<<<
+ * 
+ *     def checkActions(self):
+ */
+  __pyx_slice__2 = PySlice_New(__pyx_int_neg_25, Py_None, Py_None); if (unlikely(!__pyx_slice__2)) __PYX_ERR(0, 14, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_slice__2);
+  __Pyx_GIVEREF(__pyx_slice__2);
 
   /* "ma_crossover.pyx":8
  *     Simple moving average crossover strategy
@@ -2316,45 +2327,45 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  *         Library.Strategy.__init__(self, balance, symbol, horizon)
  *         self.prev = 0
  */
-  __pyx_tuple__2 = PyTuple_Pack(4, __pyx_n_s_self, __pyx_n_s_balance, __pyx_n_s_symbol, __pyx_n_s_horizon); if (unlikely(!__pyx_tuple__2)) __PYX_ERR(0, 8, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__2);
-  __Pyx_GIVEREF(__pyx_tuple__2);
-  __pyx_codeobj__3 = (PyObject*)__Pyx_PyCode_New(4, 0, 4, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__2, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_ma_crossover_pyx, __pyx_n_s_init, 8, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__3)) __PYX_ERR(0, 8, __pyx_L1_error)
+  __pyx_tuple__3 = PyTuple_Pack(4, __pyx_n_s_self, __pyx_n_s_balance, __pyx_n_s_symbol, __pyx_n_s_horizon); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(0, 8, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__3);
+  __Pyx_GIVEREF(__pyx_tuple__3);
+  __pyx_codeobj__4 = (PyObject*)__Pyx_PyCode_New(4, 0, 4, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__3, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_ma_crossover_pyx, __pyx_n_s_init, 8, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__4)) __PYX_ERR(0, 8, __pyx_L1_error)
 
   /* "ma_crossover.pyx":16
- *         self.indicators['slow'] = talib.SMA(self.candles.close[-10:], 10)[-1]
+ *         self.indicators['slow'] = talib.SMA(self.candles.close[-25:], 25)[-1]
  * 
  *     def checkActions(self):             # <<<<<<<<<<<<<<
  *         if self.indicators['fast'] > self.indicators['slow'] and self.holdings <= 0:
  *             self.buy(0.5)
  */
-  __pyx_tuple__4 = PyTuple_Pack(1, __pyx_n_s_self); if (unlikely(!__pyx_tuple__4)) __PYX_ERR(0, 16, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__4);
-  __Pyx_GIVEREF(__pyx_tuple__4);
-  __pyx_codeobj__5 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__4, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_ma_crossover_pyx, __pyx_n_s_checkActions, 16, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__5)) __PYX_ERR(0, 16, __pyx_L1_error)
+  __pyx_tuple__5 = PyTuple_Pack(1, __pyx_n_s_self); if (unlikely(!__pyx_tuple__5)) __PYX_ERR(0, 16, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__5);
+  __Pyx_GIVEREF(__pyx_tuple__5);
+  __pyx_codeobj__6 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__5, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_ma_crossover_pyx, __pyx_n_s_checkActions, 16, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__6)) __PYX_ERR(0, 16, __pyx_L1_error)
 
   /* "ma_crossover.pyx":22
  *             self.sell(0.5)
  * 
  *     def update(self):             # <<<<<<<<<<<<<<
  *         self.candles = self.getCandles()
- *         self.indicators['fast'] = talib.EMA(self.candles.close[-10:], 10)[-1]
+ *         self.indicators['fast'] = talib.SMA(self.candles.close[-10:], 10)[-1]
  */
-  __pyx_tuple__6 = PyTuple_Pack(1, __pyx_n_s_self); if (unlikely(!__pyx_tuple__6)) __PYX_ERR(0, 22, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__6);
-  __Pyx_GIVEREF(__pyx_tuple__6);
-  __pyx_codeobj__7 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__6, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_ma_crossover_pyx, __pyx_n_s_update, 22, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__7)) __PYX_ERR(0, 22, __pyx_L1_error)
+  __pyx_tuple__7 = PyTuple_Pack(1, __pyx_n_s_self); if (unlikely(!__pyx_tuple__7)) __PYX_ERR(0, 22, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__7);
+  __Pyx_GIVEREF(__pyx_tuple__7);
+  __pyx_codeobj__8 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__7, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_ma_crossover_pyx, __pyx_n_s_update, 22, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__8)) __PYX_ERR(0, 22, __pyx_L1_error)
 
   /* "ma_crossover.pyx":27
- *         self.indicators['slow'] = talib.SMA(self.candles.close[-10:], 10)[-1]
+ *         self.indicators['slow'] = talib.SMA(self.candles.close[-25:], 25)[-1]
  * 
  * strategy = MACrossoverStrategy(10000, "BTC/USD", "1m")             # <<<<<<<<<<<<<<
  * Library.begin(strategy)
  * 
  */
-  __pyx_tuple__8 = PyTuple_Pack(3, __pyx_int_10000, __pyx_kp_s_BTC_USD, __pyx_kp_s_1m); if (unlikely(!__pyx_tuple__8)) __PYX_ERR(0, 27, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__8);
-  __Pyx_GIVEREF(__pyx_tuple__8);
+  __pyx_tuple__9 = PyTuple_Pack(3, __pyx_int_10000, __pyx_kp_s_BTC_USD, __pyx_kp_s_1m); if (unlikely(!__pyx_tuple__9)) __PYX_ERR(0, 27, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__9);
+  __Pyx_GIVEREF(__pyx_tuple__9);
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -2367,8 +2378,10 @@ static CYTHON_SMALL_CODE int __Pyx_InitGlobals(void) {
   __pyx_float_0_5 = PyFloat_FromDouble(0.5); if (unlikely(!__pyx_float_0_5)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_0 = PyInt_FromLong(0); if (unlikely(!__pyx_int_0)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_10 = PyInt_FromLong(10); if (unlikely(!__pyx_int_10)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __pyx_int_25 = PyInt_FromLong(25); if (unlikely(!__pyx_int_25)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_10000 = PyInt_FromLong(10000L); if (unlikely(!__pyx_int_10000)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_neg_10 = PyInt_FromLong(-10); if (unlikely(!__pyx_int_neg_10)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __pyx_int_neg_25 = PyInt_FromLong(-25); if (unlikely(!__pyx_int_neg_25)) __PYX_ERR(0, 1, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;
   return -1;
@@ -2693,19 +2706,19 @@ if (!__Pyx_RefNanny) {
  *         Library.Strategy.__init__(self, balance, symbol, horizon)
  *         self.prev = 0
  */
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_12ma_crossover_19MACrossoverStrategy_1__init__, 0, __pyx_n_s_MACrossoverStrategy___init, NULL, __pyx_n_s_ma_crossover, __pyx_d, ((PyObject *)__pyx_codeobj__3)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 8, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_12ma_crossover_19MACrossoverStrategy_1__init__, 0, __pyx_n_s_MACrossoverStrategy___init, NULL, __pyx_n_s_ma_crossover, __pyx_d, ((PyObject *)__pyx_codeobj__4)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 8, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   if (__Pyx_SetNameInClass(__pyx_t_3, __pyx_n_s_init, __pyx_t_4) < 0) __PYX_ERR(0, 8, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
   /* "ma_crossover.pyx":16
- *         self.indicators['slow'] = talib.SMA(self.candles.close[-10:], 10)[-1]
+ *         self.indicators['slow'] = talib.SMA(self.candles.close[-25:], 25)[-1]
  * 
  *     def checkActions(self):             # <<<<<<<<<<<<<<
  *         if self.indicators['fast'] > self.indicators['slow'] and self.holdings <= 0:
  *             self.buy(0.5)
  */
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_12ma_crossover_19MACrossoverStrategy_3checkActions, 0, __pyx_n_s_MACrossoverStrategy_checkActions, NULL, __pyx_n_s_ma_crossover, __pyx_d, ((PyObject *)__pyx_codeobj__5)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 16, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_12ma_crossover_19MACrossoverStrategy_3checkActions, 0, __pyx_n_s_MACrossoverStrategy_checkActions, NULL, __pyx_n_s_ma_crossover, __pyx_d, ((PyObject *)__pyx_codeobj__6)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 16, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   if (__Pyx_SetNameInClass(__pyx_t_3, __pyx_n_s_checkActions, __pyx_t_4) < 0) __PYX_ERR(0, 16, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
@@ -2715,9 +2728,9 @@ if (!__Pyx_RefNanny) {
  * 
  *     def update(self):             # <<<<<<<<<<<<<<
  *         self.candles = self.getCandles()
- *         self.indicators['fast'] = talib.EMA(self.candles.close[-10:], 10)[-1]
+ *         self.indicators['fast'] = talib.SMA(self.candles.close[-10:], 10)[-1]
  */
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_12ma_crossover_19MACrossoverStrategy_5update, 0, __pyx_n_s_MACrossoverStrategy_update, NULL, __pyx_n_s_ma_crossover, __pyx_d, ((PyObject *)__pyx_codeobj__7)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 22, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_12ma_crossover_19MACrossoverStrategy_5update, 0, __pyx_n_s_MACrossoverStrategy_update, NULL, __pyx_n_s_ma_crossover, __pyx_d, ((PyObject *)__pyx_codeobj__8)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 22, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   if (__Pyx_SetNameInClass(__pyx_t_3, __pyx_n_s_update, __pyx_t_4) < 0) __PYX_ERR(0, 22, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
@@ -2738,7 +2751,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
   /* "ma_crossover.pyx":27
- *         self.indicators['slow'] = talib.SMA(self.candles.close[-10:], 10)[-1]
+ *         self.indicators['slow'] = talib.SMA(self.candles.close[-25:], 25)[-1]
  * 
  * strategy = MACrossoverStrategy(10000, "BTC/USD", "1m")             # <<<<<<<<<<<<<<
  * Library.begin(strategy)
@@ -2746,7 +2759,7 @@ if (!__Pyx_RefNanny) {
  */
   __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_MACrossoverStrategy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 27, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_tuple__8, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 27, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_tuple__9, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 27, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_strategy, __pyx_t_2) < 0) __PYX_ERR(0, 27, __pyx_L1_error)

@@ -19,6 +19,7 @@ def getFirebase():
 
 def update(name, value, balance, holdings, price, actions):
     db = getFirebase()
+    name = name.replace("/","")
     timestamp = str(round(time.time()))
     data = {}
     data['Value'] = value
@@ -34,28 +35,3 @@ def update(name, value, balance, holdings, price, actions):
             curr_action["Amount"] = actions[i].amount
             actions_list[i] = curr_action
         db.child(name+"/"+str(timestamp)+"/Actions").update(actions_list)
-    
-def balance_update(sessionID, portfolio):
-    db = getFirebase()
-    timestamp= str(round(time.time()))
-    portfolio = str(portfolio)
-    data = {}
-    data[timestamp] = portfolio
-    results = db.child(str(sessionID)+"/portfolio").update(data)
-
-
-def position_update(sessionID, position):
-    db = getFirebase()
-    timestamp= str(round(time.time()))
-    position = str(position)
-    data = {}
-    data[timestamp] = position
-    results = db.child(str(sessionID)+"/position").update(data)
-
-def quote_update(sessionID, quote):
-    db = getFirebase()
-    timestamp= str(round(time.time()))
-    quote = str(quote)
-    data = {}
-    data[timestamp] = quote
-    results = db.child(str(sessionID)+"/price").update(data)
