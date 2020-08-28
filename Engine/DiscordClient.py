@@ -3,9 +3,8 @@ import json
 import requests
 
 # used to post messages to discord
-discordApi = "https://discord.com/api/webhooks/745791613988634697/aquC2D2GHGU70zvvu_gZ_Gsn1ffxHBjzIiodpS7frc5-yLUyxLB3SVbWE7aGauUZ7zhK"
 
-def callWebhook(message):
+def callWebhook(message, discordApi):
     data = {}
     data["content"] = message
     data["username"] = "PaperBot"

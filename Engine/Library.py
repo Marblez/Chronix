@@ -32,7 +32,7 @@ class Strategy:
         self.fee = 0.001
     
     def getValue(self):
-        return self.balance() + self.holdings * self.price
+        return self.balance + self.holdings * self.price
 
     def getData(self):
         quote = BinanceClient.getQuote(self.symbol)
@@ -54,10 +54,20 @@ class Strategy:
         elif self.holdings < 0:
             self.buy(self.holdings * -1)
 
+    def setHolding(self, percentage):
+        diff = percentage - ((self.price * self.holdings)/self.getValue())
+        if diff > 0.15:
+            self.buy((self.getValue() * diff) / self.price)
+        elif diff < -0.15:
+            self.sell(abs(self.getValue() * diff) / self.price)
+
     def sell(self, amount):
-        self.balance = self.balance + (amount * self.price * (1 - self.fee))
-        self.holdings = self.holdings - amount
-        self.actions.append(Action("SELL", amount))
+        if abs((self.holdings - amount)) * self.price > self.getValue():
+            print("Not enough margin for shortsale")
+        else:
+            self.balance = self.balance + (amount * self.price * (1 - self.fee))
+            self.holdings = self.holdings - amount
+            self.actions.append(Action("SELL", amount))
 
     def buy(self, amount):
         if self.balance < amount * self.price * (1 + self.fee):
@@ -156,3 +166,6 @@ def compute_horizon(horizon):
     elif unit == 'd':
         val = val * 86400
     return val
+
+def kelly(win_rate, win_amount, loss_amount):
+    return win_rate - ((1-win_rate) / (win_amount/loss_amount)) 
