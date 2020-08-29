@@ -1,10 +1,7 @@
 import pandas as pd
-import matplotlib.pyplot as plt
 import math
 import time
-from tqdm import tqdm_notebook 
 from hmmlearn import hmm
-import seaborn as sns
 from sklearn.metrics import mean_squared_error
 
 class HMM:
