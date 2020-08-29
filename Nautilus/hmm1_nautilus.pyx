@@ -1,0 +1,69 @@
+import hmmlearn
+import talib
+import numpy as np
+import pandas as pd
+from hmmlearn import hmm
+from sklearn.metrics import mean_squared_error
+import Library
+import FirebaseClient
+
+class hmm1_nautilus():
+    """
+    Using a hidden markov model to trade ETHUSD
+    """
+    def __init__(self, balance, symbol, horizon):
+        ########## VARIABLES ##############
+        self.regime_count = 4
+        self.compression = 240
+        self.step_range = range(30, 151, 10) 
+        self.windows = range(50, 251, 10)
+        ####################################
+        self.counter = self.windows[-1] * self.compression + 1
+        self.candles = self.getCandles()
+        self.run()
+
+    def run(self):
+        for step in self.step_range:
+            for window in self.windows:
+                self.hmm = hmmlib.HMM(self.regime_count, step, self.candles[:self.windows[-1]*self.compression], self.compression, window)
+                self.simulation()
+
+    def getCandles(self):
+        data = Library.get_all_binance("ETHUSDT", "5m", save = True)
+        close = np.array(data.iloc[:,3].astype(float), np.float)[-279564:] # Jan 1 2018 - Present
+        return close
+
+    def simulate(self):
+        for i in range(self.windows[-1] * self.compression + 1, len(self.candles)):
+            if self.hmm.add(self.candles[i]):
+                self.forecast()
+
+    def forecast(self):
+        next = self.hmm.predict()
+        transmat = self.hmm.transmat()
+        regime_returns = self.hmm.getRegimeReturns()
+
+        # Calculating Win Rate, Win/Loss amount ratio, and expected value
+        win_rate = 0
+        win_amount = 0
+        loss_amount = 0
+        expected_value = 0
+
+        transarr = transmat[next]
+        for i in range(0, self.regime_count):
+            expected_value += (regime_returns[i] * transarr[i])
+            if regime_returns[i] > 0:
+                win_rate += transarr[i]
+                win_amount += regime_returns[i]
+            else:
+                loss_amount -= regime_returns[i]
+
+        position = Library.kelly(win_rate, win_amount, loss_amount)
+
+        #Low-Pass Filter
+        if abs(expected_value) > 0.003:
+            self.setHolding(position)
+
+strategy = hmm1(10000, "ETH/USD", "5m")
+Library.begin(strategy)
+
