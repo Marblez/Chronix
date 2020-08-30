@@ -43,10 +43,10 @@ class hmm1_nautilus():
         positions = []
         prices = []
         for i in range(self.windows[-1] * self.compression + 1, len(self.candles)):
-            positions.append(self.position)
-            balances.append(self.position * self.candles[i] + self.balance)
-            prices.append(self.candles[i])
             if self.hmm.add(self.candles[i]):
+                positions.append(self.position)
+                balances.append(self.position * self.candles[i] + self.balance)
+                prices.append(self.candles[i])
                 self.forecast(self.candles[i])
         FirebaseClient.log(name, "Balance", balances)
         FirebaseClient.log(name, "Position", positions)
