@@ -48,8 +48,8 @@ class hmm1_nautilus():
                 balances.append(self.position * self.candles[i] + self.balance)
                 prices.append(self.candles[i])
                 self.forecast(self.candles[i])
-        FirebaseClient.log(name, "Balance", balances)
         FirebaseClient.log(name, "Position", positions)
+        FirebaseClient.log(name, "Balance", balances)
         FirebaseClient.log(name, "Price", prices)
 
     def forecast(self, price):
@@ -73,7 +73,7 @@ class hmm1_nautilus():
                 loss_amount -= regime_returns[i]
 
         position = Library.kelly(win_rate, win_amount, loss_amount)
-
+        print("Kelly position " + str(position))
         #Low-Pass Filter
         if abs(expected_value) > 0.003:
             # Buy or sell here
