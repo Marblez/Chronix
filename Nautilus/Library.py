@@ -19,12 +19,12 @@ def kelly(win_rate, win_amount, loss_amount):
 	    return -0.8
 	if loss_amount == 0:
 	    return 0.8
-        kelly = win_rate - ((1-win_rate) / (win_amount/loss_amount))
-        if kelly > 1:
-            return 0.8
-        elif kelly < -1:
-            return -0.8
-        return kelly
+	kelly = win_rate - ((1-win_rate) / (win_amount/loss_amount));
+	if kelly > 0.8:
+		return 0.8
+	elif kelly < -0.8:
+		return -0.8
+	return kelly
     
 def minutes_of_new_data(symbol, kline_size, data, source):
 	if len(data) > 0:  old = parser.parse(data["timestamp"].iloc[-1])

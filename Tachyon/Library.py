@@ -168,4 +168,13 @@ def compute_horizon(horizon):
     return val
 
 def kelly(win_rate, win_amount, loss_amount):
-    return win_rate - ((1-win_rate) / (win_amount/loss_amount)) 
+    if win_amount == 0:
+        return -0.8
+    if loss_amount == 0:
+        return 0.8
+    kelly = win_rate - ((1-win_rate) / (win_amount/loss_amount));
+    if kelly > 0.8:
+        return 0.8
+    elif kelly < -0.8:
+        return -0.8
+    return kelly

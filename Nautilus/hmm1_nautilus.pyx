@@ -39,17 +39,17 @@ class hmm1_nautilus():
         return close
 
     def simulate(self, name):
-        balances = []
+        values = []
         positions = []
         prices = []
         for i in range(self.windows[-1] * self.compression + 1, len(self.candles)):
             if self.hmm.add(self.candles[i]):
                 positions.append(self.position)
-                balances.append(self.position * self.candles[i] + self.balance)
+                values.append(self.position * self.candles[i] + self.balance)
                 prices.append(self.candles[i])
                 self.forecast(self.candles[i])
         FirebaseClient.log(name, "Position", positions)
-        FirebaseClient.log(name, "Balance", balances)
+        FirebaseClient.log(name, "Value", values)
         FirebaseClient.log(name, "Price", prices)
 
     def forecast(self, price):
@@ -72,19 +72,20 @@ class hmm1_nautilus():
             else:
                 loss_amount -= regime_returns[i]
 
-        position = Library.kelly(win_rate, win_amount, loss_amount)
-        print("Kelly position " + str(position))
+        percentage = Library.kelly(win_rate, win_amount, loss_amount)
+        
         #Low-Pass Filter
         if abs(expected_value) > 0.003:
             # Buy or sell here
-            diff = position - (self.position * price) / (self.position * price + self.balance)
-            if diff > 0:
+            diff = percentage - (self.position * price) / (self.position * price + self.balance)
+            if diff > 0 and self.balance > diff * (self.position * price + self.balance):
+                old_balance = self.balance
                 self.balance -= diff * (self.position * price + self.balance)
-                self.position += (diff * (self.position * price + self.balance)) / price
-            else:
+                self.position += (diff * (self.position * price + old_balance)) / price
+            elif diff < 0 and self.position + (diff*(self.position*price + self.balance))/price > -1:
+                old_balance = self.balance
                 self.balance += -diff * (self.position * price + self.balance)
-                self.position += (diff * (self.position * price + self.balance)) / price
-
+                self.position += (diff * (self.position * price + old_balance)) / price
 strategy = hmm1_nautilus(10000, "ETHUSDT", "5m")
 Library.begin(strategy)
 
