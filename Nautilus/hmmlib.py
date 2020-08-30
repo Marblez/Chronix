@@ -17,11 +17,11 @@ class HMM:
         self.iterations = iterations
         self.compression_factor = compression_factor
         self.candles = self.process_candles(candles, compression_factor, window)
-        self.model = None
         self.next = []
         self.refresh_count = 0
         self.refresh_threshold = 10
-
+        self.train()
+        
     def add(self, price):
         self.next.append(price)
         if len(self.next) == self.compression_factor:
@@ -31,6 +31,7 @@ class HMM:
             self.next = []
             self.refresh_count += 1
             if self.refresh_count == self.refresh_threshold:
+                self.obs = self.obs[self.refresh_threshold:]
                 self.train()
             return True
         return False
@@ -51,8 +52,7 @@ class HMM:
         return candles
 
     def train(self):
-        self.obs = self.obs[self.refresh_threshold:]
-        self.model = hmm.GaussianHMM(n_components = regimes, covariance_type="full", n_iter = self.iterations)
+        self.model = hmm.GaussianHMM(n_components = self.regime_count, covariance_type="full", n_iter = self.iterations)
         self.model.fit(self.obs)
 
     def predict(self):

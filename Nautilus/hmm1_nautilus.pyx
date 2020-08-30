@@ -6,12 +6,17 @@ from hmmlearn import hmm
 from sklearn.metrics import mean_squared_error
 import Library
 import FirebaseClient
+import hmmlib
 
 class hmm1_nautilus():
     """
     Using a hidden markov model to trade ETHUSD
     """
     def __init__(self, balance, symbol, horizon):
+        self.balance = balance
+        self.position = 0
+        self.symbol = symbol
+        self.horizon = horizon
         ########## VARIABLES ##############
         self.regime_count = 4
         self.compression = 240
@@ -26,19 +31,28 @@ class hmm1_nautilus():
         for step in self.step_range:
             for window in self.windows:
                 self.hmm = hmmlib.HMM(self.regime_count, step, self.candles[:self.windows[-1]*self.compression], self.compression, window)
-                self.simulation()
+                self.simulate("ETHUSD" + str(step) + ":" + str(window))
 
     def getCandles(self):
-        data = Library.get_all_binance("ETHUSDT", "5m", save = True)
+        data = Library.get_all_binance(self.symbol, self.horizon, save = True)
         close = np.array(data.iloc[:,3].astype(float), np.float)[-279564:] # Jan 1 2018 - Present
         return close
 
-    def simulate(self):
+    def simulate(self, name):
+        balances = []
+        positions = []
+        prices = []
         for i in range(self.windows[-1] * self.compression + 1, len(self.candles)):
+            positions.append(self.position)
+            balances.append(self.position * self.candles[i] + self.balance)
+            prices.append(self.candles[i])
             if self.hmm.add(self.candles[i]):
-                self.forecast()
+                self.forecast(self.candles[i])
+        FirebaseClient.log(name, "Balance", balances)
+        FirebaseClient.log(name, "Position", positions)
+        FirebaseClient.log(name, "Price", prices)
 
-    def forecast(self):
+    def forecast(self, price):
         next = self.hmm.predict()
         transmat = self.hmm.transmat()
         regime_returns = self.hmm.getRegimeReturns()
@@ -62,8 +76,15 @@ class hmm1_nautilus():
 
         #Low-Pass Filter
         if abs(expected_value) > 0.003:
-            self.setHolding(position)
+            # Buy or sell here
+            diff = position - (self.position * price) / (self.position * price + self.balance)
+            if diff > 0:
+                self.balance -= diff * (self.position * price + self.balance)
+                self.position += (diff * (self.position * price + self.balance)) / price
+            else:
+                self.balance += -diff * (self.position * price + self.balance)
+                self.position += (diff * (self.position * price + self.balance)) / price
 
-strategy = hmm1(10000, "ETH/USD", "5m")
+strategy = hmm1_nautilus(10000, "ETHUSDT", "5m")
 Library.begin(strategy)
 

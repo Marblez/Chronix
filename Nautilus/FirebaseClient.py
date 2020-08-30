@@ -17,10 +17,10 @@ def getFirebase():
     db = firebase.database()
     return db
 
-def log(name, balance):
+def log(name, group, arr):
     db = getFirebase()
-    for i in range(0, len(balance)):
+    for i in range(0, len(arr)):
         data = {}
-        data['Balance'] = balance[i]
+        data[group] = arr[i]
         db.child(name + "/" + str(i)).update(data)
 
