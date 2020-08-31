@@ -89,6 +89,6 @@ class hmm1_nautilus():
                 old_balance = self.balance
                 self.balance += -diff * (self.position * price + self.balance)
                 self.position += (diff * (self.position * price + old_balance)) / price
+
 strategy = hmm1_nautilus(10000, "ETHUSDT", "5m")
-Library.begin(strategy)
 
