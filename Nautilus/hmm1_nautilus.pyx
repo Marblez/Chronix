@@ -39,6 +39,9 @@ class hmm1_nautilus():
         return close
 
     def simulate(self, name):
+        # Hard Reset
+        self.position = 0
+        self.balance = 10000
         values = []
         positions = []
         prices = []
